@@ -5,7 +5,9 @@ This plugin builds menus into the overlay while copying the complete background 
 This plugin was made by combining the following: 
 
 Advanced Dialog and Menu vB: https://github.com/dochardware/Advanced-Dialog-and-Menu
+
 gbs-uiAltDisplayTextPlugin: https://github.com/Mico27/gbs-uiAltDisplayTextPlugin
+
 
 This plugin requires to load a font tileset into VRAM using this plugin by Mico27:
 
