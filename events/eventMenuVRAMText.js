@@ -181,9 +181,9 @@ const fields = [].concat(
       key: "items",
       label: "Number of options (if menu)",
       type: "number",
-      min: 2,
+      min: 1,
       max: MAX_OPTIONS,
-      defaultValue: 2,
+      defaultValue: 1,
       conditions: [
         {
           key: "__scriptTabs",
@@ -227,7 +227,7 @@ const fields = [].concat(
           },
           {
             key: `option_${idx}_text`,
-            type: "text",
+            type: "textarea",
             label: `Set variable to '${idx}' if`,
             placeholder: `Item ${idx}`,
             defaultValue: "",
