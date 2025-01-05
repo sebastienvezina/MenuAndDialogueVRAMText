@@ -1,4 +1,4 @@
-# Menu VRAM Text plugin
+# Menu and Dialogue VRAM Text plugin
 
 This plugin builds menus into the overlay while copying the complete background and, optionally, sprites, to the overlay giving the illusion that floating windows are open on top of the background. This plugin employs an alternative method of writing text that foregoes the built-in rolling buffer and instead copies a font tileset into VRAM and uses a character map to display text. This method allows for stacking menus without suffering wrapping text from the 52 characters limitation of the rolling buffer.
 
