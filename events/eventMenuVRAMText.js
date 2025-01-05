@@ -533,19 +533,17 @@ const compile = (input, helpers) => {
 
   //end common
   let debug = 0;
-    // just somewhere to put a debug variable
-        /*
-        let debug = 0;
-        appendRaw(`
-          VM_SET_CONST VAR_TEMP_0, ${debug}
-        `)
-        */
+  
+  // just somewhere to put a debug variable
+  /*
+  let debug = 0;
+  appendRaw(`
+    VM_SET_CONST VAR_TEMP_0, ${debug}
+  `)
+  */
   
   switch (input.menuordialogue) {
     case "menu":
-
-     
-
       //build up the menu text
       Array(input.items)
         .fill()
@@ -564,12 +562,10 @@ const compile = (input, helpers) => {
         });
 
       // menu dimensions in tiles
-      const menuWidth = input.width || 1;
-      const menuHeight = input.height || 1;
+      const menuWidth = input.boxWidth || 1;
+      const menuHeight = input.boxHeight || 1;
 
       const variableAlias = getVariableAlias(input.variable);
-
-
 
       _addComment("Display Menu VRAM Text");
 
@@ -650,8 +646,9 @@ const compile = (input, helpers) => {
 
       //disable sprites on overlay when menu closes
       appendRaw(`VM_SET_CONST_UINT8 _show_actors_on_overlay, 0`);
-      _addNL();
+    
       break;
+
     case "dialogue":
       appendRaw(`
         VM_SET_CONST VAR_TEMP_0, 75
@@ -666,23 +663,21 @@ const compile = (input, helpers) => {
       const x = decOct(1 + textX);
       const y = decOct(1 + textY);
       const textPosSequence = `\\003\\${x}\\${y}`;
-      _addComment("Advanced Text Dialogue");
+      _addComment("Display Dialogue VRAM Text");
 
       textInputs.forEach((text, textIndex) => {
 
-        let endDelaySequence = "";
-
-      
+        let endDelaySequence = "";  
 
         if (input.closeWhen === "text") {
           endDelaySequence = `\\001\\${decOct(8)}\\001\\${decOct(6)}`;
         } else if (textIndex !== textInputs.length - 1) {
           endDelaySequence = `\\001\\${decOct(1)}`;
         } else {
-          endDelaySequence = `\\001\\${decOct(50)}`;
+          endDelaySequence = `\\001\\${decOct(3)}`;
         }
 
-        str = `\\001\\${decOct(20)}\\003\\${decOct(3)}\\${decOct(8)}${text}`;
+        str = `${textPosSequence}${text}${endDelaySequence}`;
         _loadStructuredText(str);
 
         if (input.clearPrevious) {
@@ -735,7 +730,8 @@ const compile = (input, helpers) => {
         }
 
        // _displayText();
-        _callNative("ui_alt_display_text");
+        //_callNative("ui_alt_display_text");
+        _callNative("ui_alt_display_dialogue");
 
         const waitFlags = [".UI_WAIT_WINDOW", ".UI_WAIT_TEXT"];
         if (input.closeWhen === "key") {
